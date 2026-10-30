@@ -72,7 +72,8 @@ Panel {
     for (var k in root.opts) next[k] = root.opts[k]
     next[key] = value
     root.opts = next
-    root.bar.run("busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetConfig sv fcitx://config/addon/bamboo 'a{sv}' 1 "
+    // Guarded like every other call: a write to a dead fcitx5 would D-Bus-start a stray one.
+    root.bar.run("pgrep -x fcitx5 >/dev/null && exec busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetConfig sv fcitx://config/addon/bamboo 'a{sv}' 1 "
       + Util.shellQuote(key) + " s " + Util.shellQuote(value))
   }
 
@@ -210,6 +211,7 @@ Panel {
           label: root.tr("inputMethod")
           value: root.opts.InputMethod
           options: root.methods
+          enabled: root.fcitxUp
           onChanged: function(v) { root.setOption("InputMethod", v) }
         }
 
@@ -231,6 +233,7 @@ Panel {
             label: root.tr("modern")
             description: root.tr("modernDesc")
             checked: root.flag("ModernStyle")
+            enabled: root.fcitxUp
             onClicked: root.setFlag("ModernStyle", !root.flag("ModernStyle"))
           }
 
@@ -239,6 +242,7 @@ Panel {
             label: root.tr("free")
             description: root.tr("freeDesc")
             checked: root.flag("FreeMarking")
+            enabled: root.fcitxUp
             onClicked: root.setFlag("FreeMarking", !root.flag("FreeMarking"))
           }
 
@@ -247,6 +251,7 @@ Panel {
             label: root.tr("restore")
             description: root.tr("restoreDesc")
             checked: root.flag("AutoNonVnRestore")
+            enabled: root.fcitxUp
             onClicked: root.setFlag("AutoNonVnRestore", !root.flag("AutoNonVnRestore"))
           }
 
@@ -255,6 +260,7 @@ Panel {
             label: root.tr("spell")
             description: root.tr("spellDesc")
             checked: root.flag("SpellCheck")
+            enabled: root.fcitxUp
             onClicked: root.setFlag("SpellCheck", !root.flag("SpellCheck"))
           }
 

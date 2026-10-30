@@ -56,7 +56,7 @@ The indicator appears on the right side of the bar. Move it with
 `omarchy bar move vinikey --section center` (or `left`/`right`).
 
 **4. Optional: the fast helper.** Without it the widget checks fcitx5 every 1.5 s, so
-the label can lag after `Ctrl+Space`. With it the label updates in about 50 ms:
+the label can lag after `Ctrl+Space`. With it the label updates within about 100 ms:
 
 ```bash
 ~/.config/omarchy/plugins/vinikey/scripts/build-helper.sh   # or run it from a clone of this repo

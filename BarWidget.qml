@@ -78,7 +78,7 @@ BarWidget {
 
   function toggleIm() {
     if (!root.bar || root.imName === "") return
-    root.bar.run("fcitx5-remote -t")
+    root.bar.run("pgrep -x fcitx5 >/dev/null && exec fcitx5-remote -t")
     // The helper reports the change within about 100 ms by itself.
     if (!root.helperUp) refreshTimer.restart()
   }

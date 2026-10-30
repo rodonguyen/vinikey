@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "vn-keyboard",
+  "name": "Vietnamese input",
+  "version": "0.4.0",
+  "author": "Rodo",
+  "license": "MIT",
+  "description": "EN/VI indicator for fcitx5 Bamboo, with a Vietnamese/English panel for the typing method and Bamboo options.",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "BarWidget.qml" },
+  "barWidget": {
+    "displayName": "Vietnamese input",
+    "description": "EN/VI indicator and Bamboo settings panel",
+    "category": "Compositor",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

@@ -129,12 +129,20 @@ Measured on the dev machine (2 monitors, 40 s windows):
 
 ## 5. Testing
 
-### 5.1 Static
-```bash
-omarchy plugin validate .
-bash -n scripts/build-helper.sh
-BIN_DIR=$(mktemp -d) ./scripts/build-helper.sh   # builds into a temp dir
-```
+### 5.1 Automated (`bash tests/run.sh`, also run by CI on every pull request)
+* `tests/strings.test.mjs`: both languages have the same keys, the fallbacks work,
+  and every key the QML passes to `tr()` exists.
+* `tests/manifest.test.mjs`: manifest fields and id rules, the QML `moduleName`s and
+  IPC target and the README commands all use the manifest id, no symlinks.
+* `tests/helper.test.sh`: the C helper on a private `dbus-daemon` with a mock fcitx5
+  (`tests/mock_fcitx5.py`). It must never activate the `org.fcitx.Fcitx5` service
+  file (checked against a call that does), must report each change once, `-` for no
+  focus or no fcitx5, and the state-file mode must keep one 32-byte record and hand
+  over to a standby. Removing `NO_AUTO_START` makes it fail.
+* `tests/build-helper.test.sh`: install into `BIN_DIR`, clean failure without a
+  compiler or on a compile error.
+
+Plus, on an Omarchy machine: `omarchy plugin validate .`
 
 ### 5.2 End to end (what was actually run)
 * Widget loaded in a real Omarchy shell; fcitx5 service stable (0 restarts).

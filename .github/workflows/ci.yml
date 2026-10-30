@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # dbus for the private test bus, python3-gi for the mock fcitx5.
+      - name: Install test dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends dbus python3-gi
+
+      - name: Run tests
+        env:
+          PYTHON: /usr/bin/python3
+        run: bash tests/run.sh

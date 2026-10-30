@@ -1,5 +1,7 @@
 # Vinikey
 
+[![CI](https://github.com/rodonguyen/vinikey/actions/workflows/ci.yml/badge.svg)](https://github.com/rodonguyen/vinikey/actions/workflows/ci.yml)
+
 > The plugin id is `rodonguyen.vinikey` (namespaced with the author's GitHub name).
 > Installed an earlier copy as `vn-keyboard` or `vinikey`? Run `omarchy plugin remove <old id>` first.
 
@@ -114,14 +116,18 @@ rm -f ~/.local/bin/fcitx5-im-watch      # if you built the helper
 omarchy restart shell
 ```
 
-## Development
+## Contributing
 
-See [docs/DESIGN.md](docs/DESIGN.md) for the requirements, how the widget talks to
-fcitx5, a list of gotchas that cost real debugging time, and how it was tested.
+Pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) covers the dev setup,
+the safety rules and the pull request checklist. Run the tests with:
 
 ```bash
+bash tests/run.sh
 omarchy plugin validate .
 ```
+
+[docs/DESIGN.md](docs/DESIGN.md) has the requirements, how the widget talks to
+fcitx5, and a list of gotchas that cost real debugging time.
 
 ## Tiếng Việt
 

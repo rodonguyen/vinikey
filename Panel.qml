@@ -45,13 +45,21 @@ Panel {
   property bool fcitxUp: true
   // True while this opening of the panel leaves the keyboard with the app.
   property bool keyboardReleased: false
-  // The last five switches are tucked away until asked for.
+  // The last six switches are tucked away until asked for.
   property bool expanded: false
   // fcitx5 or Bamboo is missing and this folder has install.sh to fix it.
   property bool setupNeeded: false
 
   readonly property string installScript: decodeURIComponent(String(Qt.resolvedUrl("install.sh")).replace(/^file:\/\//, ""))
   readonly property string fcitxProfile: (Quickshell.env("XDG_CONFIG_HOME") || (Quickshell.env("HOME") + "/.config")) + "/fcitx5/profile"
+
+  // fcitx5's "Toggle Input Method" keys, in order; null until read.
+  property var triggerKeys: null
+  // Ctrl+Shift as fcitx5 spells it: either key first, either Shift. fcitx5 fires a
+  // modifier-only hotkey on release with nothing pressed in between, so shortcuts
+  // like Ctrl+Shift+T keep working.
+  readonly property var ctrlShiftKeys: ["Control+Shift_L", "Control+Shift_R", "Shift+Control_L", "Shift+Control_R"]
+  readonly property bool ctrlShift: triggerKeys !== null && triggerKeys.indexOf("Control+Shift_L") >= 0
 
   readonly property bool vietnamese: hostWidget ? hostWidget.vietnamese : false
   readonly property string shortcut: hostWidget ? hostWidget.shortcut : "Ctrl+Space"
@@ -96,8 +104,36 @@ Panel {
     root.opts = next
   }
 
+  // GetConfig lists the keys as `"TriggerKeys" a{sv} N "0" s "Control+space" "1" s ...`.
+  function parseTriggerKeys(text) {
+    var m = /"TriggerKeys" a\{sv\} (\d+)((?: "\d+" s "[^"]*")*)/.exec(text)
+    if (!m) return
+    var keys = []
+    var re = /"\d+" s "([^"]*)"/g, k
+    while ((k = re.exec(m[2])) !== null) keys.push(k[1])
+    root.triggerKeys = keys
+  }
+
+  // Off: Ctrl+Space switches. On: Ctrl+Shift switches instead. Other keys in the
+  // list (e.g. Zenkaku_Hankaku) stay; the chosen shortcut goes first, since the bar
+  // shows the first key.
+  function setCtrlShift(on) {
+    if (!root.bar || root.triggerKeys === null) return
+    var keys = root.triggerKeys.filter(function(k) {
+      return root.ctrlShiftKeys.indexOf(k) < 0 && k !== "Control+space"
+    })
+    keys = (on ? root.ctrlShiftKeys : ["Control+space"]).concat(keys)
+    root.triggerKeys = keys
+    if (root.hostWidget) root.hostWidget.shortcut = on ? "Ctrl+Shift" : "Ctrl+Space"
+    var args = ""
+    for (var i = 0; i < keys.length; i++) args += " " + Util.shellQuote(String(i)) + " s " + Util.shellQuote(keys[i])
+    root.bar.run("pgrep -x fcitx5 >/dev/null && exec busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetConfig sv fcitx://config/global "
+      + "'a{sv}' 1 Hotkey 'a{sv}' 1 TriggerKeys 'a{sv}' " + keys.length + args)
+  }
+
   function refresh() {
     if (!setupProbe.running) setupProbe.running = true
+    if (!globalProc.running) globalProc.running = true
     if (readProc.running) return
     readProc.running = true
   }
@@ -162,6 +198,15 @@ Panel {
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: root.parseOptions(String(text || ""))
+    }
+  }
+
+  Process {
+    id: globalProc
+    command: ["sh", "-c", "pgrep -x fcitx5 >/dev/null && exec busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 GetConfig s fcitx://config/global"]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: root.parseTriggerKeys(String(text || ""))
     }
   }
 
@@ -246,7 +291,7 @@ Panel {
           onChanged: function(v) { root.setOption("InputMethod", v) }
         }
 
-        // Shows the last five switches (including the language switch) and the tools.
+        // Shows the last six switches (including the language switch) and the tools.
         Button {
           width: parent.width
           text: root.expanded ? root.tr("fewerOptions") + "  ▴" : root.tr("moreOptions") + "  ▾"
@@ -258,6 +303,15 @@ Panel {
           visible: root.expanded
           width: parent.width
           spacing: content.spacing
+
+          Toggle {
+            width: parent.width
+            label: root.tr("ctrlShift")
+            description: root.tr("ctrlShiftDesc")
+            checked: root.ctrlShift
+            enabled: root.fcitxUp && root.triggerKeys !== null
+            onClicked: root.setCtrlShift(!root.ctrlShift)
+          }
 
           Toggle {
             width: parent.width

@@ -111,6 +111,8 @@ BarWidget {
     return String(key).split("+").map(function(part) {
       if (part === "Control") return "Ctrl"
       if (part === "space") return "Space"
+      if (part === "Shift_L" || part === "Shift_R") return "Shift"
+      if (part === "Control_L" || part === "Control_R") return "Ctrl"
       return part.length > 0 ? part.charAt(0).toUpperCase() + part.slice(1) : part
     }).join("+")
   }
@@ -185,6 +187,8 @@ BarWidget {
     function toggleFromPanel(): void { root.toggleImFromPanel() }
     function setOptionsExpanded(expanded: bool): void { if (panelLoader.item) panelLoader.item.expanded = expanded }
     function setLanguage(language: string): void { root.setLanguage(language) }
+    // Needs the panel to have read fcitx5's keys once (open it first).
+    function setCtrlShift(on: bool): void { if (panelLoader.item) panelLoader.item.setCtrlShift(on) }
   }
 
   Process {

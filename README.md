@@ -79,7 +79,8 @@ outside pacman.
 | Click the indicator | open the settings panel (click outside to close) |
 | Panel: typing switch | switch language for the window you are typing in |
 | Panel: input method dropdown | change Bamboo's typing method live |
-| Panel: *More options* | expand the tone, English-restore, spell-check and language switches plus the Reload fcitx5 / Full settings tools (collapsed by default) |
+| Panel: *More options* | expand the Ctrl+Shift, tone, English-restore, spell-check and language switches plus the Reload fcitx5 / Full settings tools (collapsed by default) |
+| Panel: Switch with Ctrl+Shift | use Ctrl+Shift instead of Ctrl+Space to switch (off by default) |
 | Panel: Language/Ngôn ngữ | switch the panel between Vietnamese and English |
 
 The label reads `--` when fcitx5 is not running, and also when no window has keyboard

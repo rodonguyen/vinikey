@@ -203,11 +203,6 @@ Panel {
 
         PanelSeparator { foreground: root.contentForeground }
 
-        PanelSectionHeader {
-          text: root.tr("secTyping")
-          foreground: root.contentForeground
-        }
-
         Dropdown {
           width: parent.width
           label: root.tr("inputMethod")

@@ -27,13 +27,11 @@ A small `VI` / `EN` label in your bar, and one clean panel for
   </tr>
 </table>
 
-- **Always know which language you're typing.** The bar shows `VI` or `EN`, and it changes the moment you press `Ctrl+Space`.
 - **Clean and simple.** Turn Vietnamese typing on or off and pick your typing style. Everything else stays tucked away under *More options*.
 - **Type your way.** Telex, VNI, VIQR and more. Options like where tone marks go or spell checking take effect right away, with nothing to restart.
 - **Prefer Ctrl+Shift?** One switch makes `Ctrl+Shift` change the language instead of `Ctrl+Space`.
 - **In Vietnamese or English.** The panel is in whichever language you like.
 - **Light.** It barely uses any memory or processor.
-- **Easy to set up.** One script installs everything Vietnamese typing needs, and the panel offers to run it if anything is missing.
 
 <sub>Tested on Omarchy with Hyprland 0.56.2, fcitx5 5.1.23 and fcitx5-bamboo 1.0.11.</sub>
 

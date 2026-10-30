@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "rodonguyen.vinikey",
   "name": "Vinikey",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": "Rodo",
   "license": "MIT",
   "description": "EN/VI indicator for fcitx5 Bamboo, with a Vietnamese/English panel for the typing method and Bamboo options.",
@@ -11,7 +11,7 @@
   "barWidget": {
     "displayName": "Vinikey",
     "description": "EN/VI indicator and Bamboo settings panel",
-    "category": "System",
+    "category": "Input",
     "allowMultiple": false,
     "defaultSection": "right"
   }

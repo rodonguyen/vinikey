@@ -47,6 +47,11 @@ Panel {
   property bool keyboardReleased: false
   // The last five switches are tucked away until asked for.
   property bool expanded: false
+  // fcitx5 or Bamboo is missing and this folder has install.sh to fix it.
+  property bool setupNeeded: false
+
+  readonly property string installScript: decodeURIComponent(String(Qt.resolvedUrl("install.sh")).replace(/^file:\/\//, ""))
+  readonly property string fcitxProfile: (Quickshell.env("XDG_CONFIG_HOME") || (Quickshell.env("HOME") + "/.config")) + "/fcitx5/profile"
 
   readonly property bool vietnamese: hostWidget ? hostWidget.vietnamese : false
   readonly property string shortcut: hostWidget ? hostWidget.shortcut : "Ctrl+Space"
@@ -92,8 +97,17 @@ Panel {
   }
 
   function refresh() {
+    if (!setupProbe.running) setupProbe.running = true
     if (readProc.running) return
     readProc.running = true
+  }
+
+  // Runs install.sh in Omarchy's floating terminal, where pacman can ask for the
+  // password. The launcher hands its arguments to bash again, hence the double quoting.
+  function runSetup() {
+    if (root.bar) root.bar.run("omarchy-launch-floating-terminal-with-presentation "
+      + Util.shellQuote(Util.shellQuote(root.installScript)))
+    root.close()
   }
 
   function reloadFcitx() {
@@ -151,6 +165,16 @@ Panel {
     }
   }
 
+  // Exit 1: fcitx5 or Bamboo is not set up. Exit 2: no install.sh here (e.g. a
+  // copy without the scripts), so there is nothing to offer.
+  Process {
+    id: setupProbe
+    command: ["sh", "-c", "[ -x \"$1\" ] || exit 2; "
+      + "pacman -Q fcitx5 fcitx5-bamboo >/dev/null 2>&1 && grep -qx 'Name=bamboo' \"$2\" 2>/dev/null || exit 1",
+      "sh", root.installScript, root.fcitxProfile]
+    onExited: function(code) { root.setupNeeded = (code === 1) }
+  }
+
   KeyboardPanel {
     id: panel
     anchorItem: root.anchorItem
@@ -199,6 +223,14 @@ Panel {
           checked: root.vietnamese
           enabled: root.fcitxUp
           onClicked: if (root.hostWidget) root.hostWidget.toggleImFromPanel()
+        }
+
+        Button {
+          visible: root.setupNeeded
+          width: parent.width
+          text: root.tr("setup")
+          tooltipText: root.tr("setupTip")
+          onClicked: root.runSetup()
         }
 
         PanelSeparator { foreground: root.contentForeground }

@@ -50,7 +50,9 @@ The script finishes the setup in one go and is safe to run again:
    it the label updates every 1.5 s instead),
 5. restarts the shell so the widget appears.
 
-If a step fails, your fcitx5 config is restored. The indicator sits on the right of
+If a step fails, your fcitx5 config is restored. Skipped the script? When fcitx5 or
+Bamboo is missing, the panel offers **Set up Vietnamese typing…**, which runs it in a
+terminal for you. The indicator sits on the right of
 the bar; move it with `omarchy bar move rodonguyen.vinikey --section center`.
 
 **Update:** `omarchy plugin update rodonguyen.vinikey`, then `omarchy restart shell`.

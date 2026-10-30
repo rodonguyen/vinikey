@@ -101,8 +101,10 @@ Panel {
     root.close()
   }
 
+  // fcitx5-configtool is a separate package; say how to get it rather than fail silently.
   function openFullSettings() {
-    if (root.bar) root.bar.run("setsid -f fcitx5-configtool")
+    if (root.bar) root.bar.run("if command -v fcitx5-configtool >/dev/null; then exec setsid -f fcitx5-configtool; "
+      + "else exec notify-send " + Util.shellQuote(root.tr("configtoolMissing")) + " 'sudo pacman -S fcitx5-configtool'; fi")
     root.close()
   }
 
@@ -209,7 +211,9 @@ Panel {
         Dropdown {
           width: parent.width
           label: root.tr("inputMethod")
-          value: root.opts.InputMethod
+          // A method set elsewhere that isn't listed shows a prompt instead of a value
+          // the list doesn't contain.
+          value: root.methods.indexOf(root.opts.InputMethod) >= 0 ? root.opts.InputMethod : root.tr("chooseMethod")
           options: root.methods
           enabled: root.fcitxUp
           onChanged: function(v) { root.setOption("InputMethod", v) }

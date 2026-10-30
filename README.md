@@ -1,6 +1,7 @@
 # Vinikey
 
 [![CI](https://github.com/rodonguyen/vinikey/actions/workflows/ci.yml/badge.svg)](https://github.com/rodonguyen/vinikey/actions/workflows/ci.yml)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 **Vietnamese typing on [Omarchy](https://omarchy.org), kept simple.**
 

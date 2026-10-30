@@ -18,7 +18,7 @@ import "Strings.js" as Strings
 // keeps dying) the widget falls back to spawning fcitx5-remote every 1.5 s.
 BarWidget {
   id: root
-  moduleName: "vinikey"
+  moduleName: "rodonguyen.vinikey"
 
   // Name of the active fcitx5 input method, or "" when fcitx5 can't be reached.
   property string imName: ""
@@ -174,7 +174,7 @@ BarWidget {
   }
 
   IpcHandler {
-    target: "vinikey"
+    target: "rodonguyen.vinikey"
 
     function open(): void { root.open() }
     // Opens the panel the way a click does (keyboard stays with the app).

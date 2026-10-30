@@ -1,6 +1,7 @@
 # Vinikey
 
-> Formerly named `vn-keyboard`. If you installed that: `omarchy plugin remove vn-keyboard` first.
+> The plugin id is `rodonguyen.vinikey` (namespaced with the author's GitHub name).
+> Installed an earlier copy as `vn-keyboard` or `vinikey`? Run `omarchy plugin remove <old id>` first.
 
 A bar widget for [Omarchy](https://omarchy.org) that shows whether you are typing
 Vietnamese or English, and puts the [fcitx5](https://github.com/fcitx/fcitx5)
@@ -53,13 +54,13 @@ omarchy restart shell
 ```
 
 The indicator appears on the right side of the bar. Move it with
-`omarchy bar move vinikey --section center` (or `left`/`right`).
+`omarchy bar move rodonguyen.vinikey --section center` (or `left`/`right`).
 
 **4. Optional: the fast helper.** Without it the widget checks fcitx5 every 1.5 s, so
 the label can lag after `Ctrl+Space`. With it the label updates within about 100 ms:
 
 ```bash
-~/.config/omarchy/plugins/vinikey/scripts/build-helper.sh   # or run it from a clone of this repo
+~/.config/omarchy/plugins/rodonguyen.vinikey/scripts/build-helper.sh   # or run it from a clone of this repo
 omarchy restart shell
 ```
 
@@ -108,7 +109,7 @@ poll and never auto-starts it. Read the code before installing; it is short.
 ## Uninstall
 
 ```bash
-omarchy plugin remove vinikey
+omarchy plugin remove rodonguyen.vinikey
 rm -f ~/.local/bin/fcitx5-im-watch      # if you built the helper
 omarchy restart shell
 ```

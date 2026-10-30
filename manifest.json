@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "vinikey",
+  "id": "rodonguyen.vinikey",
   "name": "Vinikey",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "author": "Rodo",
   "license": "MIT",
   "description": "EN/VI indicator for fcitx5 Bamboo, with a Vietnamese/English panel for the typing method and Bamboo options.",

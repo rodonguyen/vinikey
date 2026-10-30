@@ -24,8 +24,8 @@ import "Strings.js" as Strings
 // gives it back to the app the first time the typing switch is used.
 Panel {
   id: root
-  moduleName: "vinikey"
-  ipcTarget: "vinikey"
+  moduleName: "rodonguyen.vinikey"
+  ipcTarget: "rodonguyen.vinikey"
   manageIpc: false
 
   property var anchorItem: null

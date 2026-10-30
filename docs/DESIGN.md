@@ -68,7 +68,7 @@ triple-method combos. They stay reachable through **Full settings**
 | `Panel.qml` | The popup (modelled on Omarchy's clock panel). |
 | `Strings.js` | Vietnamese/English string table; unknown keys fall back to English, then the key. |
 
-IPC (`omarchy-shell vinikey <fn>`): `open` (like a keyboard summon: the
+IPC (`omarchy-shell rodonguyen.vinikey <fn>`): `open` (like a keyboard summon: the
 panel takes the keyboard), `openLikeClick` (like a click: it does not), `close`,
 `toggle`, `switchLanguage` (toggles EN/VI typing), `toggleFromPanel` (exactly what
 the panel's switch does), `setLanguage <vi|en>` (panel language). These exist
@@ -121,7 +121,7 @@ Measured on the dev machine (2 monitors, 40 s windows):
 | G-5 | The Omarchy shell caches bar-widget code. Saving files reloads the plugin list but the running widget instance stays old. | `omarchy restart shell` to load widget changes (brief bar blink). Panel changes need it too. |
 | G-6 | Plugin folders must not contain symlinks (validator rejects them). | Copy, don't link. |
 | G-7 | Hyprland 0.56 uses **Lua** dispatch syntax. `hyprctl dispatch focuswindow title:X` silently does nothing. | `hyprctl dispatch 'hl.dsp.focus({ window = "title:^X$" })'`. |
-| G-8 | Third-party plugin IDs cannot use the `omarchy.*` prefix. | Current id is `vinikey`. |
+| G-8 | Third-party plugin IDs cannot use the `omarchy.*` prefix. | Current id is `rodonguyen.vinikey`. |
 | G-9 | A panel that holds keyboard focus is itself the focused fcitx5 input context. Then `fcitx5-remote -t` flips the **panel's** context (status changes, nothing visible), and `CurrentInputMethod` reports the panel's method, so the bar would show `EN` while the app is in `VI`. Setting the panel's `keyboardFocus` to `None` after it had focus does **not** give the keyboard back to the app in Hyprland 0.56; re-focusing the active window (`hl.dsp.focus({ window = "address:0x..." })`) does, and the panel stays open. | Opened by a click, the panel overrides `WlrLayershell.keyboardFocus` to `None` and never takes the keyboard. Summoned from the keyboard it takes focus (Esc/Tab/arrows work); the first use of the typing switch drops it, re-focuses the active window, then toggles. The panel stays open either way. Close the panel before sending keys in automated tests. |
 | G-10 | `wtype` types into whatever has focus. | In tests, verify the target window has focus (`hyprctl activewindow -j`) before every batch. |
 | G-12 | fcitx5 has two independent things: the *selected* method (`fcitx5-remote -s`) and active/inactive (`-t`, `Ctrl+Space`, `-c`, `-o`). Inactive is always the first method (plain keyboard); `Ctrl+Space` flips to the selected/default method. Restoring with `-s keyboard-us` selects the keyboard as the active method, after which `Ctrl+Space` toggles two identical keyboards and looks dead. | Restore with `fcitx5-remote -c` (inactive). Keep `DefaultIM=bamboo` in the profile so the toggle has somewhere to go. |
@@ -175,9 +175,10 @@ BIN_DIR=$(mktemp -d) ./scripts/build-helper.sh   # builds into a temp dir
 * **Panel keyboard focus.** A clicked-open panel does not take the keyboard,
   so Esc/Tab/arrow keys do not reach it (click outside to close). A
   keyboard-summoned panel keeps them until its typing switch is used.
-* **Plugin ID.** `vinikey` (earlier names: `rodo.vietnamese-input`, `vn-keyboard`) has no namespace prefix. The validator accepts
-  it, but ids are global, so a clash with another plugin of the same name is
-  possible. Third-party ids cannot start with `omarchy.` (G-8).
+* **Plugin ID.** `rodonguyen.vinikey` (earlier ids: `rodo.vietnamese-input`, `vn-keyboard`,
+  `vinikey`). Ids are global, so it is namespaced with the author's GitHub name, the
+  way `omarchy plugin clone` names copies `<username>.<name>`. Third-party ids cannot
+  start with `omarchy.` (G-8).
 * **Plugins run unsandboxed** in the shell with the user's permissions. The
   widget only runs `fcitx5-remote`, `busctl`, `pgrep`, `hyprctl` (re-focus, G-9),
   `~/.local/bin/fcitx5-im-watch`, `systemctl --user restart

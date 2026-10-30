@@ -22,16 +22,18 @@ A small `VI` / `EN` label in your bar, and one clean panel for
   </tr>
   <tr>
     <td align="center"><sub><b>Collapsed</b> (default)<br>typing switch and input method</sub></td>
-    <td align="center"><sub><b>More options</b><br>Bamboo switches and tools</sub></td>
+    <td align="center"><sub><b>More options</b><br>typing options and tools</sub></td>
     <td align="center"><sub><b>Tiếng Việt</b><br>the panel's default language</sub></td>
   </tr>
 </table>
 
-- **See it at a glance.** `VI` or `EN` in the bar, updated within 100 ms of `Ctrl+Space`.
-- **Only what you need.** The typing switch and input method up front; the rest waits behind *More options*.
-- **Changes apply instantly.** Telex, VNI, VIQR and more, plus Bamboo's tone and spelling options. No restart.
-- **Speaks your language.** The panel is in Tiếng Việt or English.
-- **Featherweight.** The optional helper uses under 1 MB of memory and about 0.06% CPU.
+- **Always know which language you're typing.** The bar shows `VI` or `EN`, and it changes the moment you press `Ctrl+Space`.
+- **Clean and simple.** Turn Vietnamese typing on or off and pick your typing style. Everything else stays tucked away under *More options*.
+- **Type your way.** Telex, VNI, VIQR and more. Options like where tone marks go or spell checking take effect right away, with nothing to restart.
+- **Prefer Ctrl+Shift?** One switch makes `Ctrl+Shift` change the language instead of `Ctrl+Space`.
+- **In Vietnamese or English.** The panel is in whichever language you like.
+- **Light.** It barely uses any memory or processor.
+- **Easy to set up.** One script installs everything Vietnamese typing needs, and the panel offers to run it if anything is missing.
 
 <sub>Tested on Omarchy with Hyprland 0.56.2, fcitx5 5.1.23 and fcitx5-bamboo 1.0.11.</sub>
 

@@ -9,6 +9,25 @@ A bar widget for [Omarchy](https://omarchy.org) that shows whether you are typin
 Vietnamese or English, and puts the [fcitx5](https://github.com/fcitx/fcitx5)
 Bamboo options one click away.
 
+<table>
+  <tr>
+    <td align="center" valign="top" width="33%">
+      <img src="docs/screenshots/en-collapsed.png" width="260" alt="Vinikey panel, collapsed: typing switch and input method">
+    </td>
+    <td align="center" valign="top" width="33%">
+      <img src="docs/screenshots/en-expanded.png" width="260" alt="Vinikey panel, expanded in English: Bamboo options, language switch and tools">
+    </td>
+    <td align="center" valign="top" width="33%">
+      <img src="docs/screenshots/vi-expanded.png" width="260" alt="Vinikey panel, expanded in Vietnamese">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><sub><b>Collapsed</b> (default)<br>typing switch and input method</sub></td>
+    <td align="center"><sub><b>More options</b><br>Bamboo switches and tools</sub></td>
+    <td align="center"><sub><b>Tiếng Việt</b><br>the panel's default language</sub></td>
+  </tr>
+</table>
+
 - **`VI` / `EN` indicator** in the bar, following `Ctrl+Space` within about 100 ms.
 - **Settings panel** (click the indicator):
   - the typing switch and your shortcut,

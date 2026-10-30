@@ -1,4 +1,4 @@
-// fcitx5-im-watch: tiny watcher for the vn-keyboard bar widget.
+// fcitx5-im-watch: tiny watcher for the vinikey bar widget.
 //
 // fcitx5 emits no D-Bus signal when the input method changes (Ctrl+Space is handled
 // inside fcitx5), so this asks org.fcitx.Fcitx.Controller1.CurrentInputMethod every

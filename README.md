@@ -1,4 +1,6 @@
-# vn-keyboard
+# Vinikey
+
+> Formerly named `vn-keyboard`. If you installed that: `omarchy plugin remove vn-keyboard` first.
 
 A bar widget for [Omarchy](https://omarchy.org) that shows whether you are typing
 Vietnamese or English, and puts the [fcitx5](https://github.com/fcitx/fcitx5)
@@ -46,18 +48,18 @@ normal keyboard first in the list.
 **3. Install the plugin:**
 
 ```bash
-omarchy plugin add https://github.com/rodonguyen/vn-keyboard --enable
+omarchy plugin add https://github.com/rodonguyen/vinikey --enable
 omarchy restart shell
 ```
 
 The indicator appears on the right side of the bar. Move it with
-`omarchy bar move vn-keyboard --section center` (or `left`/`right`).
+`omarchy bar move vinikey --section center` (or `left`/`right`).
 
 **4. Optional: the fast helper.** Without it the widget checks fcitx5 every 1.5 s, so
 the label can lag after `Ctrl+Space`. With it the label updates in about 50 ms:
 
 ```bash
-~/.config/omarchy/plugins/vn-keyboard/scripts/build-helper.sh   # or run it from a clone of this repo
+~/.config/omarchy/plugins/vinikey/scripts/build-helper.sh   # or run it from a clone of this repo
 omarchy restart shell
 ```
 
@@ -105,7 +107,7 @@ poll and never auto-starts it. Read the code before installing; it is short.
 ## Uninstall
 
 ```bash
-omarchy plugin remove vn-keyboard
+omarchy plugin remove vinikey
 rm -f ~/.local/bin/fcitx5-im-watch      # if you built the helper
 omarchy restart shell
 ```

@@ -177,6 +177,17 @@ Panel {
         width: parent.width
         spacing: Style.space(8)
 
+        Text {
+          width: parent.width
+          horizontalAlignment: Text.AlignHCenter
+          textFormat: Text.PlainText
+          text: "Vinikey"
+          color: root.contentForeground
+          font.family: Style.font.family
+          font.pixelSize: Style.font.title
+          font.bold: true
+        }
+
         // ---- Typing language switch. This is the same action as Ctrl+Space
         //      (the fcitx5 hotkey).
         Toggle {
@@ -191,17 +202,6 @@ Panel {
         }
 
         PanelSeparator { foreground: root.contentForeground }
-
-        Text {
-          width: parent.width
-          horizontalAlignment: Text.AlignHCenter
-          textFormat: Text.PlainText
-          text: "Vinikey"
-          color: root.contentForeground
-          font.family: Style.font.family
-          font.pixelSize: Style.font.title
-          font.bold: true
-        }
 
         PanelSectionHeader {
           text: root.tr("secTyping")

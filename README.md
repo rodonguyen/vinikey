@@ -2,12 +2,10 @@
 
 [![CI](https://github.com/rodonguyen/vinikey/actions/workflows/ci.yml/badge.svg)](https://github.com/rodonguyen/vinikey/actions/workflows/ci.yml)
 
-> The plugin id is `rodonguyen.vinikey` (namespaced with the author's GitHub name).
-> Installed an earlier copy as `vn-keyboard` or `vinikey`? Run `omarchy plugin remove <old id>` first.
+**Vietnamese typing on [Omarchy](https://omarchy.org), kept simple.**
 
-A bar widget for [Omarchy](https://omarchy.org) that shows whether you are typing
-Vietnamese or English, and puts the [fcitx5](https://github.com/fcitx/fcitx5)
-Bamboo options one click away.
+A small `VI` / `EN` label in your bar, and one clean panel for
+[fcitx5](https://github.com/fcitx/fcitx5) Bamboo. No config files to edit, no clutter.
 
 <table>
   <tr>
@@ -28,19 +26,13 @@ Bamboo options one click away.
   </tr>
 </table>
 
-- **`VI` / `EN` indicator** in the bar, following `Ctrl+Space` within about 100 ms.
-- **Settings panel** (click the indicator):
-  - the typing switch and your shortcut,
-  - input method: Telex, VNI, VIQR, Telex 2, Telex W, Telex + VNI, Microsoft layout,
-  - modern tone placement (`hoà` instead of `hòa`), free tone marking,
-    restore English words (`window` stays `window`), spell check,
-  - **Reload fcitx5** and **Full settings** buttons,
-  - a **Language/Ngôn ngữ** switch: the panel is Vietnamese by default, English on request.
-- Changes apply to the running fcitx5 immediately; no restart.
-- Light on resources: the optional helper uses about 0.06% of a core and under 1 MB.
+- **See it at a glance.** `VI` or `EN` in the bar, updated within 100 ms of `Ctrl+Space`.
+- **Only what you need.** The typing switch and input method up front; the rest waits behind *More options*.
+- **Changes apply instantly.** Telex, VNI, VIQR and more, plus Bamboo's tone and spelling options. No restart.
+- **Speaks your language.** The panel is in Tiếng Việt or English.
+- **Featherweight.** The optional helper uses under 1 MB of memory and about 0.06% CPU.
 
-> Tested on Omarchy with Hyprland 0.56.2, fcitx5 5.1.23 and fcitx5-bamboo 1.0.11.
-> Other versions may need small changes; see [docs/DESIGN.md](docs/DESIGN.md).
+<sub>Tested on Omarchy with Hyprland 0.56.2, fcitx5 5.1.23 and fcitx5-bamboo 1.0.11.</sub>
 
 ## Requirements
 

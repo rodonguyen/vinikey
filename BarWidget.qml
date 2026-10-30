@@ -183,6 +183,7 @@ BarWidget {
     function toggle(): void { root.togglePanel() }
     function switchLanguage(): void { root.toggleIm() }
     function toggleFromPanel(): void { root.toggleImFromPanel() }
+    function setOptionsExpanded(expanded: bool): void { if (panelLoader.item) panelLoader.item.expanded = expanded }
     function setLanguage(language: string): void { root.setLanguage(language) }
   }
 

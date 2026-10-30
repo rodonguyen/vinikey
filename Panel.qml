@@ -45,6 +45,8 @@ Panel {
   property bool fcitxUp: true
   // True while this opening of the panel leaves the keyboard with the app.
   property bool keyboardReleased: false
+  // The last five switches are tucked away until asked for.
+  property bool expanded: false
 
   readonly property bool vietnamese: hostWidget ? hostWidget.vietnamese : false
   readonly property string shortcut: hostWidget ? hostWidget.shortcut : "Ctrl+Space"
@@ -187,6 +189,17 @@ Panel {
 
         PanelSeparator { foreground: root.contentForeground }
 
+        Text {
+          width: parent.width
+          horizontalAlignment: Text.AlignHCenter
+          textFormat: Text.PlainText
+          text: "Vinikey"
+          color: root.contentForeground
+          font.family: Style.font.family
+          font.pixelSize: Style.font.title
+          font.bold: true
+        }
+
         PanelSectionHeader {
           text: root.tr("secTyping")
           foreground: root.contentForeground
@@ -200,71 +213,85 @@ Panel {
           onChanged: function(v) { root.setOption("InputMethod", v) }
         }
 
-        Toggle {
+        // Shows the last five switches (including the language switch) and the tools.
+        Button {
           width: parent.width
-          label: root.tr("modern")
-          description: root.tr("modernDesc")
-          checked: root.flag("ModernStyle")
-          onClicked: root.setFlag("ModernStyle", !root.flag("ModernStyle"))
+          text: root.expanded ? root.tr("fewerOptions") + "  ▴" : root.tr("moreOptions") + "  ▾"
+          onClicked: root.expanded = !root.expanded
         }
 
-        Toggle {
+        Column {
+          id: extraOptions
+          visible: root.expanded
           width: parent.width
-          label: root.tr("free")
-          description: root.tr("freeDesc")
-          checked: root.flag("FreeMarking")
-          onClicked: root.setFlag("FreeMarking", !root.flag("FreeMarking"))
-        }
+          spacing: content.spacing
 
-        Toggle {
-          width: parent.width
-          label: root.tr("restore")
-          description: root.tr("restoreDesc")
-          checked: root.flag("AutoNonVnRestore")
-          onClicked: root.setFlag("AutoNonVnRestore", !root.flag("AutoNonVnRestore"))
-        }
-
-        Toggle {
-          width: parent.width
-          label: root.tr("spell")
-          description: root.tr("spellDesc")
-          checked: root.flag("SpellCheck")
-          onClicked: root.setFlag("SpellCheck", !root.flag("SpellCheck"))
-        }
-
-        // ---- Language of this panel. Bilingual label so it can be found
-        //      from either language. On means Vietnamese.
-        Toggle {
-          width: parent.width
-          label: "Language/Ngôn ngữ"
-          description: root.tr("languageDesc")
-          checked: root.lang === "vi"
-          onClicked: if (root.hostWidget) root.hostWidget.setLanguage(root.lang === "vi" ? "en" : "vi")
-        }
-
-        PanelSeparator { foreground: root.contentForeground }
-
-        PanelSectionHeader {
-          text: root.tr("secTools")
-          foreground: root.contentForeground
-        }
-
-        Row {
-          width: parent.width
-          spacing: Style.space(8)
-
-          Button {
-            width: (parent.width - parent.spacing) / 2
-            text: root.tr("reload")
-            tooltipText: root.tr("reloadTip")
-            onClicked: root.reloadFcitx()
+          Toggle {
+            width: parent.width
+            label: root.tr("modern")
+            description: root.tr("modernDesc")
+            checked: root.flag("ModernStyle")
+            onClicked: root.setFlag("ModernStyle", !root.flag("ModernStyle"))
           }
 
-          Button {
-            width: (parent.width - parent.spacing) / 2
-            text: root.tr("fullSettings")
-            tooltipText: root.tr("fullSettingsTip")
-            onClicked: root.openFullSettings()
+          Toggle {
+            width: parent.width
+            label: root.tr("free")
+            description: root.tr("freeDesc")
+            checked: root.flag("FreeMarking")
+            onClicked: root.setFlag("FreeMarking", !root.flag("FreeMarking"))
+          }
+
+          Toggle {
+            width: parent.width
+            label: root.tr("restore")
+            description: root.tr("restoreDesc")
+            checked: root.flag("AutoNonVnRestore")
+            onClicked: root.setFlag("AutoNonVnRestore", !root.flag("AutoNonVnRestore"))
+          }
+
+          Toggle {
+            width: parent.width
+            label: root.tr("spell")
+            description: root.tr("spellDesc")
+            checked: root.flag("SpellCheck")
+            onClicked: root.setFlag("SpellCheck", !root.flag("SpellCheck"))
+          }
+
+          // ---- Language of this panel. Bilingual label so it can be found
+          //      from either language. On means Vietnamese.
+          Toggle {
+            width: parent.width
+            label: "Language/Ngôn ngữ"
+            description: root.tr("languageDesc")
+            checked: root.lang === "vi"
+            onClicked: if (root.hostWidget) root.hostWidget.setLanguage(root.lang === "vi" ? "en" : "vi")
+          }
+
+          PanelSeparator { foreground: root.contentForeground }
+
+          PanelSectionHeader {
+            text: root.tr("secTools")
+            foreground: root.contentForeground
+          }
+
+          Row {
+            width: parent.width
+            spacing: Style.space(8)
+
+            Button {
+              width: (parent.width - parent.spacing) / 2
+              text: root.tr("reload")
+              tooltipText: root.tr("reloadTip")
+              onClicked: root.reloadFcitx()
+            }
+
+            Button {
+              width: (parent.width - parent.spacing) / 2
+              text: root.tr("fullSettings")
+              tooltipText: root.tr("fullSettingsTip")
+              onClicked: root.openFullSettings()
+            }
           }
         }
       }

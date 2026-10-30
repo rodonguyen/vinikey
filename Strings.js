@@ -5,6 +5,8 @@
 var table = {
   vi: {
     languageDesc: "Tiếng Việt (tắt = English)",
+    moreOptions: "Tùy chọn khác",
+    fewerOptions: "Thu gọn",
     typing: "Gõ tiếng Việt",
     shortcut: "Phím tắt",
     notRunning: "fcitx5 chưa chạy",
@@ -30,6 +32,8 @@ var table = {
   },
   en: {
     languageDesc: "English (on = Tiếng Việt)",
+    moreOptions: "More options",
+    fewerOptions: "Show less",
     typing: "Vietnamese typing",
     shortcut: "Shortcut",
     notRunning: "fcitx5 is not running",

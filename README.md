@@ -34,51 +34,40 @@ A small `VI` / `EN` label in your bar, and one clean panel for
 
 <sub>Tested on Omarchy with Hyprland 0.56.2, fcitx5 5.1.23 and fcitx5-bamboo 1.0.11.</sub>
 
-## Requirements
-
-- Omarchy with its shell plugin support (`omarchy plugin ...`).
-- `fcitx5`, `fcitx5-bamboo` (and `fcitx5-configtool` for the Full settings button).
-  All are in Arch's official `extra` repo.
-- fcitx5 running as Omarchy's `omarchy-fcitx5.service` (the default on Omarchy).
-- Optional, for instant updates: a C compiler (`base-devel`).
-
 ## Install
 
-**1. Install fcitx5 and Bamboo** (skip what you already have):
-
 ```bash
-sudo pacman -S --needed fcitx5 fcitx5-bamboo fcitx5-configtool
+omarchy plugin add https://github.com/rodonguyen/vinikey
+~/.config/omarchy/plugins/rodonguyen.vinikey/install.sh
 ```
 
-**2. Add Bamboo as an input method.** The easy way: run `fcitx5-configtool`, open
-*Input Method*, untick *Only show current language*, and add **Bamboo**. Keep your
-normal keyboard first in the list.
+The script finishes the setup in one go and is safe to run again:
 
-> If you edit `~/.config/fcitx5/profile` by hand, stop fcitx5 first
-> (`systemctl --user stop omarchy-fcitx5.service`), edit, then start it again.
-> fcitx5 rewrites that file from memory when it exits, so edits made while it runs
-> are lost.
+1. installs `fcitx5`, `fcitx5-bamboo` and `fcitx5-configtool` (pacman asks for your password),
+2. adds Bamboo to fcitx5 (Telex, unless you already picked another method),
+3. enables the bar widget,
+4. builds the small helper that keeps the label instant (needs `base-devel`; without
+   it the label updates every 1.5 s instead),
+5. restarts the shell so the widget appears.
 
-**3. Install the plugin:**
+If a step fails, your fcitx5 config is restored. The indicator sits on the right of
+the bar; move it with `omarchy bar move rodonguyen.vinikey --section center`.
 
-```bash
-omarchy plugin add https://github.com/rodonguyen/vinikey --enable
-omarchy restart shell
-```
+**Update:** `omarchy plugin update rodonguyen.vinikey`, then `omarchy restart shell`.
 
-The indicator appears on the right side of the bar. Move it with
-`omarchy bar move rodonguyen.vinikey --section center` (or `left`/`right`).
+### What it changes
 
-**4. Optional: the fast helper.** Without it the widget checks fcitx5 every 1.5 s, so
-the label can lag after `Ctrl+Space`. With it the label updates within about 100 ms:
+| What | When | Undone by `uninstall.sh` |
+|---|---|---|
+| packages `fcitx5`, `fcitx5-bamboo`, `fcitx5-configtool` | only the missing ones | no: your typing setup stays |
+| `~/.config/fcitx5/profile`: adds Bamboo, points `Ctrl+Space` at it | only if Bamboo isn't there yet; fcitx5 is stopped while editing, backup in `~/.local/state/vinikey/` | no |
+| `~/.config/fcitx5/conf/bamboo.conf`: `InputMethod=Telex` | only if no method is set | no |
+| the plugin folder and its entry in `~/.config/omarchy/shell.json` | always | yes |
+| `~/.local/bin/fcitx5-im-watch` and `$XDG_RUNTIME_DIR/fcitx5-im-watch` | if a compiler is available | yes |
 
-```bash
-~/.config/omarchy/plugins/rodonguyen.vinikey/scripts/build-helper.sh   # or run it from a clone of this repo
-omarchy restart shell
-```
-
-This compiles `helper/fcitx5-im-watch.c` into `~/.local/bin/fcitx5-im-watch`. If there
-is no compiler it tells you and the widget keeps working with the slower check.
+The panel's switches change Bamboo's options through fcitx5 itself, which saves
+them in `bamboo.conf`. Nothing else is touched: no systemd overrides, no sudo
+outside pacman.
 
 ## Use
 
@@ -103,8 +92,8 @@ focus, because fcitx5 keeps one input state per window.
   `bamboo` (the method `Ctrl+Space` switches to), not your plain keyboard. If you
   ever restored state with `fcitx5-remote -s <keyboard>`, reset it with
   `fcitx5-remote -s bamboo; fcitx5-remote -c`.
-- **Label lags by a second:** the helper isn't installed or loaded. Run step 4, then
-  `omarchy restart shell`. Widget code changes always need a shell restart.
+- **Label lags by a second:** the helper isn't built. Install `base-devel`, run
+  `install.sh` again. Widget code changes always need `omarchy restart shell`.
 - **Typing doesn't convert in one app:** check that the app has an input-method
   environment (`QT_IM_MODULE=fcitx`, and no `GTK_IM_MODULE` on Wayland).
 - **Settings panel text is English/Vietnamese the wrong way round:** use the
@@ -122,10 +111,11 @@ poll and never auto-starts it. Read the code before installing; it is short.
 ## Uninstall
 
 ```bash
-omarchy plugin remove rodonguyen.vinikey
-rm -f ~/.local/bin/fcitx5-im-watch      # if you built the helper
-omarchy restart shell
+~/.config/omarchy/plugins/rodonguyen.vinikey/uninstall.sh
 ```
+
+Removes the widget and its helper. Vietnamese typing keeps working without it; to
+remove Bamboo too: `sudo pacman -Rns fcitx5-bamboo`.
 
 ## Contributing
 
@@ -148,9 +138,14 @@ Widget cho thanh bar của Omarchy, hiển thị bạn đang gõ **tiếng Việ
 từ tiếng Anh, kiểm tra chính tả. Bảng mặc định bằng tiếng Việt; công tắc
 **Language/Ngôn ngữ** đổi sang English.
 
-Cài đặt: làm theo các bước ở phần *Install* phía trên (cài `fcitx5-bamboo`, thêm
-Bamboo trong `fcitx5-configtool`, rồi `omarchy plugin add ... --enable`). Phím tắt
-chuyển ngôn ngữ mặc định là `Ctrl+Space`.
+Cài đặt bằng một lệnh (cài fcitx5 + Bamboo, bật widget, chạy lại an toàn):
+
+```bash
+omarchy plugin add https://github.com/rodonguyen/vinikey
+~/.config/omarchy/plugins/rodonguyen.vinikey/install.sh
+```
+
+Phím tắt chuyển ngôn ngữ mặc định là `Ctrl+Space`.
 
 ## License
 

@@ -6,7 +6,7 @@ on the approach before you spend time on it.
 
 ## Set up
 
-You need an Omarchy machine with fcitx5 and Bamboo working (see the README).
+You need an Omarchy machine with fcitx5 and Bamboo working (`./install.sh` sets that up).
 
 `omarchy plugin add` installs the plugin as a git clone, so you can work in place:
 
@@ -51,7 +51,7 @@ What they cover:
 | `tests/strings.test.mjs` | both languages have the same keys, fallbacks, every key the QML uses exists |
 | `tests/manifest.test.mjs` | manifest fields, id rules, QML and README use the manifest id, no symlinks |
 | `tests/helper.test.sh` | the C helper on a private D-Bus: never auto-starts fcitx5, reports changes, state-file handover |
-| `tests/build-helper.test.sh` | `scripts/build-helper.sh` installs, and fails cleanly without a compiler |
+| `tests/install.test.sh` | `install.sh` in a throwaway HOME (fcitx5, systemd and omarchy stubbed): fcitx5 profile merge and rollback, keeping the user's method, plugin placement and id migration, helper build |
 
 The helper test runs its own D-Bus daemon and a mock fcitx5, so it never touches
 your real session. CI runs the same suite on every pull request.

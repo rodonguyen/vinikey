@@ -40,10 +40,13 @@ test("QML module names and IPC targets use the manifest id", () => {
   assert.match(panel, new RegExp(`ipcTarget: "${id.replace(/\./g, "\\.")}"`))
 })
 
-test("README commands use the manifest id", () => {
+test("README commands and the scripts use the manifest id", () => {
   const readme = read("README.md")
-  assert.ok(readme.includes(`omarchy plugin remove ${manifest.id}`))
+  assert.ok(readme.includes(`plugins/${manifest.id}/install.sh`))
+  assert.ok(readme.includes(`plugins/${manifest.id}/uninstall.sh`))
   assert.ok(readme.includes(`omarchy bar move ${manifest.id}`))
+  for (const script of ["install.sh", "uninstall.sh"])
+    assert.ok(read(script).includes(`PLUGIN_ID="${manifest.id}"`), `${script} uses another id`)
 })
 
 test("no symlinks (the plugin validator rejects them)", () => {

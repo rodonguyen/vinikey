@@ -14,7 +14,7 @@ What is in this repo:
 | Part | Where | What it is |
 |---|---|---|
 | Bar widget (Omarchy shell plugin) | `manifest.json`, `BarWidget.qml`, `Panel.qml`, `Strings.js` | `EN` / `VI` indicator + settings panel |
-| Optional helper | `helper/fcitx5-im-watch.c`, `scripts/build-helper.sh` | Makes the label follow a switch within about 100 ms |
+| Optional helper | `helper/fcitx5-im-watch.c`, built by `install.sh` | Makes the label follow a switch within about 100 ms |
 
 Setting up fcitx5 itself (packages, adding Bamboo to the profile) is described in
 the README; this repo does not change your fcitx5 configuration except through the
@@ -97,7 +97,7 @@ keeps one session-bus connection and calls `CurrentInputMethod` every 100 ms.
   A missing binary (exit 127) or three exits within 5 s each switch the widget to
   the old 1.5 s spawn poll; it tries the helper again every 60 s. Helper exits
   otherwise restart it after 2 s (the 1.5 s poll covers the gap).
-* **Built by `scripts/build-helper.sh`** with `cc -O2 -s -static`, falling back
+* **Built by `install.sh`** with `cc -O2 -s -static`, falling back
   to a dynamic build, into `~/.local/bin/fcitx5-im-watch`. Optional: without it the
   widget uses the slower poll.
 
@@ -139,8 +139,10 @@ Measured on the dev machine (2 monitors, 40 s windows):
   file (checked against a call that does), must report each change once, `-` for no
   focus or no fcitx5, and the state-file mode must keep one 32-byte record and hand
   over to a standby. Removing `NO_AUTO_START` makes it fail.
-* `tests/build-helper.test.sh`: install into `BIN_DIR`, clean failure without a
-  compiler or on a compile error.
+* `tests/install.test.sh`: `install.sh` in a throwaway HOME with fcitx5, systemd
+  and the omarchy CLI stubbed: profile merge, keeping a chosen method and DefaultIM,
+  rollback on an unknown profile, plugin placement (never over a git clone), the
+  old-id migration, and the helper build with every compiler outcome.
 
 Plus, on an Omarchy machine: `omarchy plugin validate .`
 

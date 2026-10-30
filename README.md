@@ -151,6 +151,14 @@ omarchy plugin add https://github.com/rodonguyen/vinikey
 
 Phím tắt chuyển ngôn ngữ mặc định là `Ctrl+Space`.
 
+## Random sharing
+
+Vinikey was built and tested with an AI coding agent driving the real desktop: it
+opens a scratch typing pad, types Vietnamese through Bamboo, flips the panel's
+switches and checks every result on its own. Here it is at 3x speed:
+
+https://github.com/user-attachments/assets/4099dac0-b863-40ef-b2b8-e2b809353cf1
+
 ## License
 
 [MIT](LICENSE)

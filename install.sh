@@ -186,11 +186,12 @@ EOF
 }
 
 # Telex is the default for new installs. A method someone already chose (VNI,
-# VIQR, ...) is theirs, so only fill in InputMethod when it is missing.
+# VIQR, ...) is theirs, so only fill in InputMethod when it is missing. A new
+# file also turns off the underline (the bar widget does the same at runtime).
 ensure_input_method() {
   local file="$1"
   if [ ! -s "$file" ]; then
-    printf 'InputMethod=Telex\n' > "$file"
+    printf 'InputMethod=Telex\nDisplayUnderline=False\n' > "$file"
   elif ! grep -q '^InputMethod=' "$file"; then
     printf 'InputMethod=Telex\n' >> "$file"
   fi

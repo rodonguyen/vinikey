@@ -81,6 +81,7 @@ sandbox() {
   check "config: fresh profile has keyboard then bamboo, DefaultIM=bamboo" \
     'grep -qx "Name=keyboard-us" "$PROFILE" && grep -qx "Name=bamboo" "$PROFILE" && grep -qx "DefaultIM=bamboo" "$PROFILE"'
   check "config: fresh install uses Telex"       'grep -qx "InputMethod=Telex" "$BAMBOO_CONF"'
+  check "config: fresh install has no underline" 'grep -qx "DisplayUnderline=False" "$BAMBOO_CONF"'
   check "config: nothing left to do afterwards"  '! config_needed'
   rm -rf "$SANDBOX"
 )

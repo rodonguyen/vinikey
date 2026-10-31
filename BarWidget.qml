@@ -120,6 +120,7 @@ BarWidget {
   Component.onCompleted: {
     refresh()
     shortcutProc.running = true
+    underlineProc.running = true
     startHelper()
   }
 
@@ -130,6 +131,7 @@ BarWidget {
   // pointer: opened by a click, so the panel leaves the keyboard with the app.
   function open(pointer) {
     shortcutProc.running = true
+    underlineProc.running = true
     if (panelLoader.item) panelLoader.item.open(pointer === true)
   }
 
@@ -283,6 +285,13 @@ BarWidget {
         if (m && m[1] !== "") root.shortcut = root.prettyKey(m[1])
       }
     }
+  }
+
+  // Vinikey types without Bamboo's underline under the word being composed. Asked
+  // again on every panel open in case fcitx5 was not up yet when the bar started.
+  Process {
+    id: underlineProc
+    command: ["sh", "-c", "pgrep -x fcitx5 >/dev/null && exec busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetConfig sv fcitx://config/addon/bamboo 'a{sv}' 1 DisplayUnderline s False"]
   }
 
   // Fallback only: short delay so fcitx5 has applied the toggle before we read it back.
